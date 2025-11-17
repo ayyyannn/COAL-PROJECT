@@ -1,8 +1,8 @@
 ;roll no: 24l-0524
 
-[org 0x0100]              ; com file format - program starts at 0x0100
+[org 0x0100]              
 
-jmp start                 ; jump to main program (skip data section)
+jmp start                
 
 
 ; all game variables stored here
@@ -954,8 +954,9 @@ gameOver:
     mov ah, 0
     int 0x16
     
-    ; Terminate program and return to DOS
-    mov ax, 0x4c00         ; AH=4Ch (terminate), AL=00 (return code)
 
-    int 0x21               ; DOS interrupt
+    mov ax, 0x4c00         
+
+    int 0x21               
+
 
