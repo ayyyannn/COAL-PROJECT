@@ -48,7 +48,7 @@ COLOR_TREE equ 06h         ; brown trees
 ; text messages displayed in game
 msgScore: db 'Score: ', 0
 msgGameOver: db 'GAME OVER!', 0
-msgFinalscore: db 'Final Score: ', 0
+msgFinalScore: db 'Final Score: ', 0
 
 ; ========== subroutines ==========
 
@@ -958,5 +958,6 @@ gameOver:
     mov ax, 0x4c00         
 
     int 0x21               
+
 
 
