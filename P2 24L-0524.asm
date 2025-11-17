@@ -1,13 +1,10 @@
-; race car game - assembly language
-; course: cs401 - assembly language programming
-; phase i and ii implementation only
-; student: ayan iftikhar, roll no: 24l-0524
+roll no: 24l-0524
 
 [org 0x0100]              ; com file format - program starts at 0x0100
 
 jmp start                 ; jump to main program (skip data section)
 
-; ========== data section ==========
+
 ; all game variables stored here
 
 ; game state variables
@@ -18,7 +15,7 @@ scrollCounter: db 0        ; counter to control animation speed
 scrollOffset: db 0         ; offset for creating scrolling effect
 scoreCounter: db 0         ; counter to slow down score increment
 
-; obstacle (enemy car) management - can have up to 6 enemies on screen
+; obstalce (enemy car) management - can have up to 6 enemies on screen
 obstacleCount: db 0        ; number of active obstacles
 obstacleLanes: times 6 db 0  ; which lane each obstacle is in (0-2)
 obstacleRows: times 6 db 0   ; which row each obstacle is at (0-24)
@@ -51,7 +48,7 @@ COLOR_TREE equ 06h         ; brown trees
 ; text messages displayed in game
 msgScore: db 'Score: ', 0
 msgGameOver: db 'GAME OVER!', 0
-msgFinalScore: db 'Final Score: ', 0
+msgFinalscore: db 'Final Score: ', 0
 
 ; ========== subroutines ==========
 
@@ -828,11 +825,11 @@ drawObstacles:
     pop es
     ret
 
-; ========== MAIN PROGRAM ==========
-; Phase I & II Implementation (No Interrupts)
+; ====== MAIN PROGRAM ==========
+
 
 start:
-    ; === Initial Setup ===
+;setting the screen up
     call clrscr            ; Clear screen (fill with green)
     call drawScreen        ; Draw road, terrain, trees
     call drawCar           ; Draw player's car
@@ -849,9 +846,8 @@ start:
     call printnum
 
 ; === Main Game Loop ===
-; Uses polling (checking keyboard repeatedly) instead of interrupts
 gameLoop:
-    ; Check if key is available (non-blocking check)
+   
     mov ah, 1              ; BIOS function: check keyboard status
     int 0x16               ; INT 16h - keyboard services
     jnz .keyPressed        ; ZF=0 means key is available
@@ -888,9 +884,9 @@ gameLoop:
     
 .updateGame:
     ; === control game speed ===
-    ; increment counter and only update every 6 iterations (much slower scroll)
+    ; increment counter and only update every 6 iterations much slower scroll
     inc byte [scrollCounter]
-    cmp byte [scrollCounter], 6  ; update every 6th loop iteration (slower for viva demo)
+    cmp byte [scrollCounter], 6  ; update every 6th loop iterationsz
     jl gameLoop            ; if less than 6, loop again without updating
     
     mov byte [scrollCounter], 0  ; Reset counter
@@ -960,4 +956,5 @@ gameOver:
     
     ; Terminate program and return to DOS
     mov ax, 0x4c00         ; AH=4Ch (terminate), AL=00 (return code)
+
     int 0x21               ; DOS interrupt
