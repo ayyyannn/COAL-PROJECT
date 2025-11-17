@@ -1,4 +1,4 @@
-roll no: 24l-0524
+;roll no: 24l-0524
 
 [org 0x0100]              ; com file format - program starts at 0x0100
 
@@ -958,3 +958,4 @@ gameOver:
     mov ax, 0x4c00         ; AH=4Ch (terminate), AL=00 (return code)
 
     int 0x21               ; DOS interrupt
+
